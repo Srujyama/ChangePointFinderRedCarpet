@@ -3,7 +3,7 @@
 # Different regions and the specific areas that the change at are provided in a text file
 # Region matches are provided in a text file
 
-# Copyright (C) 2024 Srujan S. Yamali
+# Copyright (C) 2025 Srujan S. Yamali
 
 #########################################################################################
 # LICENSE
@@ -212,14 +212,14 @@ def write_all_region_comparisons_to_file(all_region_comparisons, file_path):
 def merge_adjacent_similar_regions(data, regions, similarity_threshold=0.05):
     merged_regions = []
     i = 0
-    while i < len(regions):
-        start1, end1, data1 = regions[i]
+    while i < len(regions): # Check if there are more regions to process
+        start1, end1, data1 = regions[i] # Get the current region
 
-        while i + 1 < len(regions):
+        while i + 1 < len(regions): # Check if there is a next region
             start2, end2, data2 = regions[i + 1] # Get the next region
 
             if end1 + 1 == start2: # Check if regions are adjacent
-                region1_data, region2_data = pad_to_same_length(data1, data2)
+                region1_data, region2_data = pad_to_same_length(data1, data2) # Pad the data to the same length
                 t_stats, p_values = ttest_ind(region1_data.T, region2_data.T, axis=1, nan_policy='omit')
                 avg_p_value = np.nanmean(p_values) if p_values.size > 0 else float('inf')
 
